@@ -1,0 +1,38 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    font-family: Roboto, Arial;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+    color: black;
+    font-family: Roboto;
+
+}
+
+header {
+    display: block;
+    width: 100%;
+    max-width: 1400px;
+}
+
+h1,
+h2 {
+    display: block;
+    text-align: center;
+}
+
+.section {
+    margin: 2vp;
+
+}
+footer {
+    background-color: black;
+    color: white;
+    font-size: 1vw;
+    margin: 0 auto 0 auto;
+    max-width: 1400px;
+    width: 100%;
+}

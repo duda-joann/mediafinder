@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block side %}
+<form method = "post">
+    {% csrf_token %}
+     {{ form.as_p }}
+    <% if request.GET.next %}
+    <input  type = "hidden" name = "next" value =
+
+<button type="submit" class="btn btn-primary"> Login </button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{%block title %}Media Collector{% endblock %}
+
+
+{% block side %}
+<div class = .container >
+    <div class = .col>
+    <div class = .d-flex>
+<form action= '' method="POST" class="form horizontal well">
+    {% csrf_token %}
+    <label> What are you looking for? </label> <br>
+    {{form_search.search_word}} {{form_search.filter }}
+    <input type="submit" class="btn btn-primary" value = "Search"> <br>
+</form>
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block result %}
+        {% for key, element in video.items %}
+<p>
+<iframe id=" ytplayer " src=" {{element}}" width = "420" height = "315" > </iframe> <br>
+<a href="{{element}}"> Watch in Youtube </a>
+
+</p>
+                    {% endfor %}
+</div>
+{% endblock %}
+
