@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
      'mediafinder.apps.MediafinderConfig',
-    'crispy_forms',
+    'crispy_forms'
 ]
 
 MIDDLEWARE = [
@@ -128,7 +128,8 @@ MEDIA_ROOT = 'media'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'search'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-DATE_INPUT_FORMATS = ("%d %b %Y",)
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-SESSION_COOKIE_SECURE = True
+REGISTER_REDIRECT_URL = 'login'
+#SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+#SESSION_COOKIE_SECURE = True
+#SESSION_COOKIE_DOMAIN ='http://127.0.0.1:8000/'
 

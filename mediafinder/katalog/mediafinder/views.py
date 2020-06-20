@@ -14,12 +14,11 @@ def index(request: http.HttpRequest) -> http.HttpResponse:
     title = "MEDIA FINDER"
     return render(request, "main.html", {'title': title})
 
-
 def register_new_user(request: http.HttpRequest) -> http.HttpResponse:
     form_register = RegisterForm(request.POST)
     if form_register.is_valid():
         form_register.save()
-        return redirect('search', errorMessage=None, successMessage=None)
+        return redirect('login',)
     else:
         return render(request, 'register.html', {'form': form_register})
 
@@ -72,13 +71,13 @@ def return_search(request: http.HttpRequest) -> http.HttpResponse:
 def create_rating(request: http.HttpRequest) -> http.HttpResponse:
     """create view for rating webside"""
     form = RatingForm()
+    review = Rating.objects.all().order_by('date')
     if request.method == "POST":
-        review = Rating.objects.all().order_by('date')
         if form.is_valid:
             rate = int(request.POST['rate'])
-            review = request.POST['review']
             form.save()
             return render(request, 'aboutus.html', {'form': form})
     else:
 
-        return render(request, 'aboutus.html', {'form': form})
+        return render(request, 'aboutus.html', {'form': form,
+                                                'review': review})

@@ -1,11 +1,9 @@
 {% extends 'index.html' %}
+{% load crispy_forms_tags %}
 
-{% block webside %}
+{% block side %}
 <h1> REGISTRATION </h1>
-<form action = ""  method="POST">
-    {% csrf_token %}
-         {{form_register}}
-<button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+{% crispy form %}
 
 {% endblock %}

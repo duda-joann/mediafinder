@@ -23,7 +23,7 @@ class RegisterForm(UserCreationForm):
     """Registration form for new user"""
 
     name = forms.CharField(max_length=100,
-                           validators=[RegexValidator(regex='^[a-zA-Z]$',
+                           validators=[RegexValidator(regex='^[a-zA-Z]{2,}$',
                                                       message='This in not name',
                                                       )]
                            )
