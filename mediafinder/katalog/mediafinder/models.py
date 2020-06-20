@@ -61,6 +61,9 @@ class Function(models.Model):
 
 
 class Rating(models.Model):
+    """
+    Table contains information about review and rates for page
+    """
     review = models.CharField(max_length=200, blank=True)
     rate = models.PositiveSmallIntegerField(default=5, validators=[MaxValueValidator(5)])
     author = models.ForeignKey(User, null=True, blank=True,  on_delete=models.CASCADE)

@@ -1,7 +1,7 @@
 from django import http
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from .api import call_api
 from .forms import FormSearch, RegisterForm, RatingForm
 from .models import Search, Rating
@@ -25,6 +25,10 @@ def register_new_user(request: http.HttpRequest) -> http.HttpResponse:
 
 def search_movies(request: http.HttpRequest) -> http.HttpResponse:
     """ Get video ID from APi number one"""
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+
     if request.method == "POST":
         form_search = FormSearch(request.POST)
 
@@ -37,7 +41,7 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
                 'part': 'snippet',
                 'order': order,
                 'q': search_word,
-                'key': 'AIzaSyDq40TMB7TjYBzTgcwQHzU_EQouYvprDHs',
+                'key': 'AIzaSyAaJPWwerdkyWGIfxL6oIMiJOkl1DCD6Lw',
                 'maxResults': 12,
                 'type': 'video',
             }
@@ -56,7 +60,8 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
     else:
         form_search = FormSearch(request.POST)
 
-    return render(request, 'search.html', {'form_search': form_search})
+    return render(request, 'search.html', {'form_search': form_search,
+                                           'user': username,})
 
 
 @login_required()
@@ -70,14 +75,17 @@ def return_search(request: http.HttpRequest) -> http.HttpResponse:
 
 def create_rating(request: http.HttpRequest) -> http.HttpResponse:
     """create view for rating webside"""
-    form = RatingForm()
-    review = Rating.objects.all().order_by('date')
-    if request.method == "POST":
-        if form.is_valid:
-            rate = int(request.POST['rate'])
-            form.save()
-            return render(request, 'aboutus.html', {'form': form})
-    else:
 
+    username = None
+    if request.user.is_authenticated:
+        username = request.user.username
+
+    if request.method == "POST":
+        form = RatingForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = RatingForm()
         return render(request, 'aboutus.html', {'form': form,
-                                                'review': review})
+                                                'user': username,})

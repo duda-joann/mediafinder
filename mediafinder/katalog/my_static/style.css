@@ -6,10 +6,24 @@
 }
 
 body {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     font-family: Roboto;
-
+    nav {
+        overflow: hidden;
+        width: 100%;
+    }
+    a.main {
+        background-color: midnightblue;
+        display: block;
+        width: 25%;
+        padding: 10px 20px;
+        color: white;
+        text-decoration: none;
+        text-align: center;
+        float: left;
+        transition: all 1s ease;
+    }
 }
 
 header {
@@ -26,8 +40,8 @@ h2 {
 
 .section {
     margin: 2vp;
-
 }
+
 footer {
     background-color: black;
     color: white;

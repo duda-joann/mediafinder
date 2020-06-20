@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+
+
+{%block title %}MySearch{% endblock %}
+
+
+{% block side %}
+{% if user.is_authenticated %}
+{% for item in result %}
+<p>  {{item}} </p>
+{% endfor %}
+{% endif %}
+
+    {% endblock %}

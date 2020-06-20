@@ -13,6 +13,6 @@
 </head>
 <body>
 <img src="{% static 'main.jpg' %}" class="img-fluid" alt="World of information">
-{{text}}
+<a role="button" href= {% url 'media:search' %} class="btn btn-primary btn-blog"> {{title}}</a>
 </body>
 </html>

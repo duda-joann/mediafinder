@@ -1,3 +1,16 @@
 {% extends 'index.html' %}
+{% load crispy_forms_tags %}
 
-{% crispy
+{% block side %}
+
+<div> <p> Logged as {{user}} </p> </div>
+
+<div> {% crispy form %} </div> <br>
+
+<div>
+    {% for key, value in result %}
+    {{review.as_table}}
+    {% endfor %}
+</div>
+
+{%endblock%}
