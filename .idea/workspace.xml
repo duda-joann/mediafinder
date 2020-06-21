@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="daf96b02-4826-426d-9bb5-940a57dc3881" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/registration/login.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +79,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592690070465</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="mysearch update">
+      <created>1592724235988</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1592724235988</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -102,6 +105,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="registration" />
     <MESSAGE value="Forms for review and rate corrected" />
-    <option name="LAST_COMMIT_MESSAGE" value="Forms for review and rate corrected" />
+    <MESSAGE value="mysearch update" />
+    <option name="LAST_COMMIT_MESSAGE" value="mysearch update" />
   </component>
 </project>

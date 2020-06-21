@@ -83,4 +83,10 @@ class Favourites(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     favorites = models.CharField(max_length=200)
 
+    def format(self):
+        return f'{str(self.owner)}, {str(self.favorites)}'
+
+    def __str__ (self):
+        return self.format()
+
 
