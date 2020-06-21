@@ -67,10 +67,8 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
 @login_required()
 def return_search(request: http.HttpRequest) -> http.HttpResponse:
     if User.is_authenticated:
-        user_search_result = Search.objects.filter(user=request.user).order_by('search_date')
+        user_search_result = Search.objects.all().order_by('search_date')
         return render(request, 'my_search.html', {'result': user_search_result})
-    else:
-        return redirect(request, 'login/')
 
 
 def create_rating(request: http.HttpRequest) -> http.HttpResponse:
@@ -89,3 +87,7 @@ def create_rating(request: http.HttpRequest) -> http.HttpResponse:
         form = RatingForm()
         return render(request, 'aboutus.html', {'form': form,
                                                 'user': username,})
+
+
+def add_to_favourites(request: http.HttpRequest) -> http.HttpResponse:
+    pass

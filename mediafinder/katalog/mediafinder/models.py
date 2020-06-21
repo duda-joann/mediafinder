@@ -2,6 +2,8 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.core.validators import MaxValueValidator
+
+
 # Create your models here.
 
 
@@ -66,7 +68,7 @@ class Rating(models.Model):
     """
     review = models.CharField(max_length=200, blank=True)
     rate = models.PositiveSmallIntegerField(default=5, validators=[MaxValueValidator(5)])
-    author = models.ForeignKey(User, null=True, blank=True,  on_delete=models.CASCADE)
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     date = models.DateTimeField(default=timezone.now)
 
     def format(self):
@@ -74,3 +76,11 @@ class Rating(models.Model):
 
     def __str__(self):
         return self.format()
+
+
+class Favourites(models.Model):
+    """ Model contains info about user and favorites moviews"""
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    favorites = models.CharField(max_length=200)
+
+

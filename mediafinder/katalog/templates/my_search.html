@@ -9,6 +9,8 @@
 {% for item in result %}
 <p>  {{item}} </p>
 {% endfor %}
+{% else %}
+<a href= {% url 'media:login' %} > Please sign in to see your results!</a>
 {% endif %}
 
     {% endblock %}
