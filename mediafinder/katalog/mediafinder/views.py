@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 from .api import call_api
 from .forms import FormSearch, RegisterForm, RatingForm
 from .models import Search, Rating
+from .exceptions import CallApiError
 
 
 # Create your views here.
@@ -33,30 +34,34 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
         form_search = FormSearch(request.POST)
 
         if form_search.is_valid:
-            search_word: str = request.POST['search_word']
-            order: str = request.POST['filter']
-            form_search.save()
-            search_api = "https://www.googleapis.com/youtube/v3/search"
-            search_params = {
-                'part': 'snippet',
-                'order': order,
-                'q': search_word,
-                'key': 'AIzaSyAaJPWwerdkyWGIfxL6oIMiJOkl1DCD6Lw',
-                'maxResults': 12,
-                'type': 'video',
-            }
+            try:
+                search_word: str = request.POST['search_word']
+                order: str = request.POST['filter']
+                form_search.save()
+                search_api = "https://www.googleapis.com/youtube/v3/search"
+                search_params = {
+                    'part': 'snippet',
+                    'order': order,
+                    'q': search_word,
+                    'key': 'AIzaSyAaJPWwerdkyWGIfxL6oIMiJOkl1DCD6Lw',
+                    'maxResults': 12,
+                    'type': 'video',
+                }
 
-            data = call_api(search_api, search_params)
+                data = call_api(search_api, search_params)
 
-            video_id_list = [data['items'][i]['id']['videoId'] for i in range(12)]
+                video_id_list = [data['items'][i]['id']['videoId'] for i in range(12)]
 
-            video_url = {video_id: "https://www.youtube.com/embed/" + video_id
-                         for video_id in video_id_list}
+                video_url = {video_id: "https://www.youtube.com/embed/" + video_id
+                             for video_id in video_id_list}
+            except CallApiError:
+                return render(request, 'error.html')
 
             return render(request, 'search.html', {
                 'form_search': form_search,
                 'word': search_word,
                 'video': video_url})
+
     else:
         form_search = FormSearch(request.POST)
 
@@ -67,7 +72,7 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
 @login_required()
 def return_search(request: http.HttpRequest) -> http.HttpResponse:
     if User.is_authenticated:
-        user_search_result = Search.objects.all().order_by('search_date')
+        user_search_result = Search.objects.filter(user = request.user)
         return render(request, 'my_search.html', {'result': user_search_result})
 
 
@@ -77,7 +82,7 @@ def create_rating(request: http.HttpRequest) -> http.HttpResponse:
     username = None
     if request.user.is_authenticated:
         username = request.user.username
-
+    review = Rating.objects.all().order_by('date')
     if request.method == "POST":
         form = RatingForm(request.POST)
         if form.is_valid:
@@ -86,7 +91,8 @@ def create_rating(request: http.HttpRequest) -> http.HttpResponse:
     else:
         form = RatingForm()
         return render(request, 'aboutus.html', {'form': form,
-                                                'user': username,})
+                                                'user': username,
+                                                'review': review})
 
 
 def add_to_favourites(request: http.HttpRequest) -> http.HttpResponse:
