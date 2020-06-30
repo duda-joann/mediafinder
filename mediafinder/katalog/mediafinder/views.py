@@ -1,10 +1,10 @@
 from django import http
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_list_or_404
 from .api import call_api
-from .forms import FormSearch, RegisterForm, RatingForm
-from .models import Search, Rating
+from .forms import FormSearch, RegisterForm, RatingForm, FavoritesForm
+from .models import Search, Rating, Favourites
 from .exceptions import CallApiError
 
 
@@ -12,8 +12,14 @@ from .exceptions import CallApiError
 
 
 def index(request: http.HttpRequest) -> http.HttpResponse:
+    """
+    Render main page
+    :param request:
+    :return; view of main page
+    """
     title = "MEDIA FINDER"
     return render(request, "main.html", {'title': title})
+
 
 def register_new_user(request: http.HttpRequest) -> http.HttpResponse:
     form_register = RegisterForm(request.POST)
@@ -25,10 +31,13 @@ def register_new_user(request: http.HttpRequest) -> http.HttpResponse:
 
 
 def search_movies(request: http.HttpRequest) -> http.HttpResponse:
-    """ Get video ID from APi number one"""
-    username = None
-    if request.user.is_authenticated:
-        username = request.user.username
+    """
+    Get video ID from APi number one
+    :param request
+    :return generate view with youtube result  on requested by user search word
+    and  order by choosen by user param: order
+
+    """
 
     if request.method == "POST":
         form_search = FormSearch(request.POST)
@@ -65,23 +74,27 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
     else:
         form_search = FormSearch(request.POST)
 
-    return render(request, 'search.html', {'form_search': form_search,
-                                           'user': username,})
+    return render(request, 'search.html', {'form_search': form_search},)
 
 
 @login_required()
 def return_search(request: http.HttpRequest) -> http.HttpResponse:
+    """
+    Create view of last searches for logged users
+    :param request:
+    :return: generate page contains  result of search for logged users
+    """
     if User.is_authenticated:
         user_search_result = Search.objects.filter(user = request.user)
         return render(request, 'my_search.html', {'result': user_search_result})
 
 
 def create_rating(request: http.HttpRequest) -> http.HttpResponse:
-    """create view for rating webside"""
-
-    username = None
-    if request.user.is_authenticated:
-        username = request.user.username
+    """create view for rating webside
+    :param request:
+    :return: generate viev of rating webside with form to rate for
+    signup user and show  reviews orders by date for all users
+    """
     review = Rating.objects.all().order_by('date')
     if request.method == "POST":
         form = RatingForm(request.POST)
@@ -91,9 +104,14 @@ def create_rating(request: http.HttpRequest) -> http.HttpResponse:
     else:
         form = RatingForm()
         return render(request, 'aboutus.html', {'form': form,
-                                                'user': username,
                                                 'review': review})
 
 
 def add_to_favourites(request: http.HttpRequest) -> http.HttpResponse:
-    pass
+    fav = request.GET.get('video', '')
+    owner = request.user
+    Favourites.save()
+
+    return render(request, 'add_to_fav.html', {'fav': fav})
+
+

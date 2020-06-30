@@ -8,8 +8,11 @@
 <div> {% crispy form %} </div> <br>
 
 <div>
-    {% for key, value in result %}
-    {{review.as_table}}
+    {% for item in review %}
+    <div>
+        <p> {{item.rate}} </p>
+        <p> {{item.review}} </p>
+        <p> {{item.date}} </p>
     {% endfor %}
 </div>
 

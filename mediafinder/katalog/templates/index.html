@@ -5,19 +5,22 @@
     <title>
     {% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"></head><body><div class=.container-fluid><header><img src="{% static 'image1.jpg' %}" class="img-fluid" alt="World of information"></header>
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"></head>
+<body>
+<div class=.container-fluid><header><img src="{% static 'image1.jpg' %}" class="img-fluid" alt="World of information"></header>
 
-    <div id = menu >
+    <naw id = menu >
 <nav>
 
-<nav class="nav nav-pills nav-justified">
+<nav class="nav nav-pills nav-justified btn btn-dark">
   <a class="nav-item nav-link" href= {% url 'media:search' %} >Search</a>
   <a class="nav-item nav-link" href= {% url 'media:login' %}>Join</a>
   <a class="nav-item nav-link" href={% url 'media:mysearch' %}>MySearch</a>
   <a class="nav-item nav-link"href={% url 'media:aboutus' %}>AboutUs</a>
 </nav>
-</div>
 
+</naw>
+{% if user.is_authenticated %} Hello, {{ user.username }}. {% endif %}
 <h1>WELCOME TO THE MEDIA FINDER </h1>
 <section class="content"><h2>About Services </h2>
 {% lorem %}

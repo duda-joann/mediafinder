@@ -7,8 +7,13 @@
 {% block side %}
 {% if user.is_authenticated %}
 {% for item in result %}
-<p>  {{item}} </p>
+<div>
+<p> {{item.date}} </p>
+    <p> {{item.search_word}} </p>
+    <p> {{item.user}} </p>
+</div>
 {% endfor %}
+
 {% else %}
 <a href= {% url 'media:login' %} > Please sign in to see your results!</a>
 {% endif %}

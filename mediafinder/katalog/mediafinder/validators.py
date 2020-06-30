@@ -1,4 +1,3 @@
-
 from django.core.exceptions import ValidationError
 from datetime import date
 
@@ -6,7 +5,8 @@ from datetime import date
 def validate_age(date_of_birth):
 
     """
-    params: value -> date of birth  provide by User
+    :param value: -> date of birth  provide by User
+    :return: age of user, if user is younger than 13 years old,  it raises exception in form.
     function to check user's age.
     If user is younger than 13 years, can not register
     """

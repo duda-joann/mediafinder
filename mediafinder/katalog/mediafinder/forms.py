@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column
-from .models import Search, Rating
+from .models import Search, Rating, Favourites
 from .validators import validate_age
 
 
@@ -71,3 +71,11 @@ class RatingForm(forms.ModelForm):
                 Column('rate', css_class="form-group col-md-12"),
             ),
             Submit('submit', 'Submit',  css_default='btn_default'))
+
+
+class FavoritesForm(forms.ModelForm):
+
+    class Meta:
+        model = Favourites
+        fields = ('favourites',)
+
