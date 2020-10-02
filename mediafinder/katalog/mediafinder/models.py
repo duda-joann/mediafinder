@@ -1,7 +1,13 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.shortcuts import reverse
 from django.utils import timezone
 from django.core.validators import MaxValueValidator
+from django.db.models import signals
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
+
+
 
 
 # Create your models here.
@@ -29,8 +35,10 @@ class Search(models.Model):
     transaction_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     search_word = models.CharField(max_length=200)
+    result_url = models.CharField(max_length = 200)
     filter = models.CharField(max_length=100, choices=Order, default=DATE)
     search_date = models.DateTimeField(default=timezone.now)
+    slug = models.SlugField()
 
     def format(self):
         return f'{str(self.transaction_id)}, {str(self.user)},  {str(self.search_word)}, {str(self.search_date)}'
@@ -38,6 +46,20 @@ class Search(models.Model):
     def __str__(self):
         return self.format()
 
+    def save(self, *args, **kwargs):
+        super(Search, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("mediafinder:view", kwargs={'slug': self.slug})
+
+    def add_to_favourite(self):
+        return reverse("mediafinder:add-to-favourite", kwargs={'slug': self.slug})
+
+
+@receiver(pre_save, sender=Search)
+@receiver(post_save, sender=Search)
+def receiver(*args, **kwargs):
+    print('signal dispatched')
 
 class Function(models.Model):
     """
@@ -84,7 +106,7 @@ class Favourites(models.Model):
     favourites = models.CharField(max_length=200)
 
     def format(self):
-        return f'{str(self.owner)}, {str(self.favorites)}'
+        return f'{str(self.owner)}, {str(self.favourites)}'
 
     def __str__(self):
         return self.format()

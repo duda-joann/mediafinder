@@ -126,7 +126,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'media:search'
+LOGIN_REDIRECT_URL = 'mediafinder:search'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 

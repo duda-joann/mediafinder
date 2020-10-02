@@ -1,11 +1,13 @@
 from django import http
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_list_or_404
 from .api import call_api
 from .forms import FormSearch, RegisterForm, RatingForm, FavoritesForm
 from .models import Search, Rating, Favourites
 from .exceptions import CallApiError
+
 
 
 # Create your views here.
@@ -19,6 +21,7 @@ def index(request: http.HttpRequest) -> http.HttpResponse:
     """
     title = "MEDIA FINDER"
     return render(request, "main.html", {'title': title})
+
 
 
 def register_new_user(request: http.HttpRequest) -> http.HttpResponse:
@@ -46,7 +49,6 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
             try:
                 search_word: str = request.POST['search_word']
                 order: str = request.POST['filter']
-                form_search.save()
                 search_api = "https://www.googleapis.com/youtube/v3/search"
                 search_params = {
                     'part': 'snippet',
@@ -63,18 +65,23 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
 
                 video_url = {video_id: "https://www.youtube.com/embed/" + video_id
                              for video_id in video_id_list}
+
+                for url in video_url:
+                    Search.save(search_word = search_word)
+                    Search.save(result_url = url)
+
+
+
+
             except CallApiError:
                 return render(request, 'error.html')
 
-            return render(request, 'search.html', {
-                'form_search': form_search,
-                'word': search_word,
-                'video': video_url})
+            return render(request, 'search.html', {'video':video_url,
+                                                   'form_search':form_search})
 
     else:
         form_search = FormSearch(request.POST)
-
-    return render(request, 'search.html', {'form_search': form_search},)
+        return render(request, "search.html", {'form_search':form_search})
 
 
 @login_required()

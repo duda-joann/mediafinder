@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{%block title %}Media Collector{% endblock %}
+
+
+{% block result %}
+
+{% if video|length == 0 %}
+No  results found!
+{% else %}
+        {% for key, element in video.items %}
+<p>
+<iframe id=" ytplayer " src=" {{element}}" width = "420" height = "315" > </iframe> <br>
+<a href="{{element}}"> Watch in Youtube </a>
+    <a href = {% url 'mediafinder:addfavourites' {{element}}> Add to favourites </a>
+</p>
+                    {% endfor %}
+{% endif %}
+</div>
+{% endblock %}
