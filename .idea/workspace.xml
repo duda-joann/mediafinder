@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="daf96b02-4826-426d-9bb5-940a57dc3881" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/registration/password_reset_form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/result.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/katalog/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/katalog/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/mediafinder/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/main.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mediafinder/katalog/templates/my_search.html" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/my_search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/registration/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mediafinder/katalog/templates/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/mediafinder/katalog/templates/search.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -111,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1593546154450</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="save to database">
+      <created>1601661364016</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1601661364016</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,6 +131,7 @@
     <MESSAGE value="mysearch update" />
     <MESSAGE value="model Favourites created" />
     <MESSAGE value="changes to models" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes to models" />
+    <MESSAGE value="save to database" />
+    <option name="LAST_COMMIT_MESSAGE" value="save to database" />
   </component>
 </project>

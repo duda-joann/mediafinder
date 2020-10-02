@@ -15,7 +15,7 @@
 {% endfor %}
 
 {% else %}
-<a href= {% url 'mediafinder:login' %} > Please sign in to see your results!</a>
+<a href= {% url for 'mediafinder:login' %} > Please sign in to see your results!</a>
 {% endif %}
 
     {% endblock %}

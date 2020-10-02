@@ -1,7 +1,6 @@
 from django import http
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_list_or_404
 from .api import call_api
 from .forms import FormSearch, RegisterForm, RatingForm, FavoritesForm
@@ -66,12 +65,26 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
                 video_url = {video_id: "https://www.youtube.com/embed/" + video_id
                              for video_id in video_id_list}
 
-                for url in video_url:
-                    Search.save(search_word = search_word)
-                    Search.save(result_url = url)
+                if request.user is None:
+                    for url in video_url:
+                        search_attrs = {
+                        'user': None,
+                        'search_word': search_word,
+                        'result_url': url,
+                        'filter': order,
+                    }
 
+                    Search.objects.create(**search_attrs)
+                else:
+                    for url in video_url:
+                        search_attrs = {
+                        'user': request.user,
+                        'search_word': search_word,
+                        'result_url': url,
+                        'filter': order,
+                        }
 
-
+                    Search.objects.create(**search_attrs)
 
             except CallApiError:
                 return render(request, 'error.html')
