@@ -1,6 +1,5 @@
 from django import http
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_list_or_404
 from .api import call_api
 from .forms import FormSearch, RegisterForm, RatingForm, FavoritesForm
@@ -68,13 +67,11 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
                 if request.user is None:
                     for url in video_url:
                         search_attrs = {
-                        'user': None,
+                        'user': django.contrib.auth.models,
                         'search_word': search_word,
                         'result_url': url,
                         'filter': order,
                     }
-
-                    Search.objects.create(**search_attrs)
                 else:
                     for url in video_url:
                         search_attrs = {
@@ -84,7 +81,7 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
                         'filter': order,
                         }
 
-                    Search.objects.create(**search_attrs)
+                Search.objects.create(**search_attrs)
 
             except CallApiError:
                 return render(request, 'error.html')

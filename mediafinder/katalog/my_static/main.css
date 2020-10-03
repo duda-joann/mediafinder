@@ -1,0 +1,24 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+header {
+    background-image: url('main.jpg');
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+}
+
+button {
+    width: 250px;
+    height: 50px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+}
