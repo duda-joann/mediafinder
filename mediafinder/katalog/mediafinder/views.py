@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from .forms import FormSearch, RegisterForm, RatingForm, FavoritesForm
 from .models import Search, Rating, Favourites
 from .exceptions import CallApiError
+from .manager import SearchManager
 
 
 
@@ -125,11 +126,17 @@ def create_rating(request: http.HttpRequest) -> http.HttpResponse:
                                                 'review': review})
 
 
+def find_last_user_search(request: http.HttpRequest) -> http.HttpResponse:
+    user_results = SearchManager()
+    return render(request, 'last_search.html', {'user_results': user_results})
+
+
 def add_to_favourites(request: http.HttpRequest) -> http.HttpResponse:
     fav = request.GET.get('video', '')
     owner = request.user
     Favourites.save()
 
     return render(request, 'add_to_fav.html', {'fav': fav})
+
 
 
