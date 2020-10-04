@@ -2,6 +2,7 @@ from django import http
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_list_or_404
 from .api import call_api
+from django.contrib.auth.models import User
 from .forms import FormSearch, RegisterForm, RatingForm, FavoritesForm
 from .models import Search, Rating, Favourites
 from .exceptions import CallApiError
@@ -64,24 +65,24 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
                 video_url = {video_id: "https://www.youtube.com/embed/" + video_id
                              for video_id in video_id_list}
 
-                if request.user is None:
-                    for url in video_url:
+
+                lines = []
+                for key, value in video_url.items():
+                    if request.user is None:
                         search_attrs = {
-                        'user': django.contrib.auth.models,
+                        'user': request.user.username,
                         'search_word': search_word,
-                        'result_url': url,
-                        'filter': order,
-                    }
-                else:
-                    for url in video_url:
-                        search_attrs = {
-                        'user': request.user,
-                        'search_word': search_word,
-                        'result_url': url,
+                        'result_url': value,
                         'filter': order,
                         }
-
-                Search.objects.create(**search_attrs)
+                        Search.objects.create(**search_attrs)
+                    else:
+                        search_attrs = {
+                            'search_word': search_word,
+                            'result_url': value,
+                            'filter': order,
+                        }
+                        Search.objects.create(**search_attrs)
 
             except CallApiError:
                 return render(request, 'error.html')

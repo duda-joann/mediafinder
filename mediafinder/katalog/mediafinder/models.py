@@ -32,7 +32,7 @@ class Search(models.Model):
         (VIEWS, 'Views'),
     ]
 
-    transaction_id = models.AutoField(primary_key=True)
+    transaction_id = models.AutoField(primary_key=True,)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     search_word = models.CharField(max_length=200)
     result_url = models.CharField(max_length = 200)
