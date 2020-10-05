@@ -3,11 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, HttpResponseRedirect, get_list_or_404
 from .api import call_api
 from django.contrib.auth.models import User
-from .forms import FormSearch, RegisterForm, RatingForm, FavoritesForm
+from .forms import FormSearch, RegisterForm, RatingForm
 from .models import Search, Rating, Favourites
 from .exceptions import CallApiError
-from .manager import SearchManager
-
 
 
 # Create your views here.
@@ -23,7 +21,6 @@ def index(request: http.HttpRequest) -> http.HttpResponse:
     return render(request, "main.html", {'title': title})
 
 
-
 def register_new_user(request: http.HttpRequest) -> http.HttpResponse:
     form_register = RegisterForm(request.POST)
     if form_register.is_valid():
@@ -35,7 +32,7 @@ def register_new_user(request: http.HttpRequest) -> http.HttpResponse:
 
 def search_movies(request: http.HttpRequest) -> http.HttpResponse:
     """
-    Get video ID from APi number one
+    Get video ID from APi number one and save result to database
     :param request
     :return generate view with youtube result  on requested by user search word
     and  order by choosen by user param: order
@@ -66,8 +63,6 @@ def search_movies(request: http.HttpRequest) -> http.HttpResponse:
                 video_url = {video_id: "https://www.youtube.com/embed/" + video_id
                              for video_id in video_id_list}
 
-
-                lines = []
                 for key, value in video_url.items():
                     if request.user is None:
                         search_attrs = {
@@ -104,7 +99,7 @@ def return_search(request: http.HttpRequest) -> http.HttpResponse:
     :return: generate page contains  result of search for logged users
     """
     if User.is_authenticated:
-        user_search_result = Search.objects.filter(user = request.user)
+        user_search_result = Search.search_by_user
         return render(request, 'my_search.html', {'result': user_search_result})
 
 
@@ -126,9 +121,9 @@ def create_rating(request: http.HttpRequest) -> http.HttpResponse:
                                                 'review': review})
 
 
-def find_last_user_search(request: http.HttpRequest) -> http.HttpResponse:
-    user_results = SearchManager()
-    return render(request, 'last_search.html', {'user_results': user_results})
+""" def find_last_user_search(request: http.HttpRequest) -> http.HttpResponse:
+    user_results = Search.search_by_user()
+    return render(request, 'last_search.html', {'user_results': user_results})"""
 
 
 def add_to_favourites(request: http.HttpRequest) -> http.HttpResponse:

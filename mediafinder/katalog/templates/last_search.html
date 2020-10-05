@@ -3,6 +3,9 @@
 
 {% block result %}
 
-{% for i in
+{% for item in user_results %}
+<iframe id=" ytplayer " src=" {{item}}" width = "420" height = "315" > </iframe> <br>
+<a href="{{element}}"> Watch in Youtube </a>
+{% endfor %}
 
 {% endblock %}

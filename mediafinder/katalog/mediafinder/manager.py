@@ -1,6 +1,13 @@
 from django.db import models
 
 
+class SearchQuerySet(models.QuerySet):
+    def users(self):
+        return self.filter(user=self.request.user)
+
+
 class SearchManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset.filter(user=self.request.user)
+    pass
+
+
+UserSearchManager = SearchManager.from_queryset(SearchQuerySet)

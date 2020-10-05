@@ -6,16 +6,17 @@
 
 {% block side %}
 {% if user.is_authenticated %}
-{% for item in result %}
+{% for item in result.items %}
 <div>
 <p> {{item.date}} </p>
     <p> {{item.search_word}} </p>
     <p> {{item.user}} </p>
+    <p> {{item.result_url}} </p>
 </div>
 {% endfor %}
 
 {% else %}
-<a href= {% url for 'mediafinder:login' %} > Please sign in to see your results!</a>
+<a href= {% url 'mediafinder:login' %} > Please sign in to see your results!</a>
 {% endif %}
 
     {% endblock %}

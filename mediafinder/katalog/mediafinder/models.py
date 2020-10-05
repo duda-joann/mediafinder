@@ -6,6 +6,7 @@ from django.core.validators import MaxValueValidator
 from django.db.models import signals
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
+from .manager import UserSearchManager
 
 
 
@@ -39,6 +40,8 @@ class Search(models.Model):
     filter = models.CharField(max_length=100, choices=Order, default=DATE)
     search_date = models.DateTimeField(default=timezone.now)
     slug = models.SlugField()
+    search_by_user = UserSearchManager()
+    objects = models.Manager()
 
     def format(self):
         return f'{str(self.transaction_id)}, {str(self.user)},  {str(self.search_word)}, {str(self.search_date)}'

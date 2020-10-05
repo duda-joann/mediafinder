@@ -19,4 +19,5 @@ urlpatterns = [
     re_path(r'^login/', include("django.contrib.auth.urls"), name="login"),
     path('', index),
     path('search/', search_movies, name="search"),
-    path('add-to-favourites<slug>', add_to_favourites, name="favourite")]
+    path('add-to-favourites<slug>', add_to_favourites, name="favourite"),
+    ]
