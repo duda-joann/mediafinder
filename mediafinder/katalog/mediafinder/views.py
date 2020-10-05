@@ -99,7 +99,7 @@ def return_search(request: http.HttpRequest) -> http.HttpResponse:
     :return: generate page contains  result of search for logged users
     """
     if User.is_authenticated:
-        user_search_result = Search.search_by_user
+        user_search_result = Search.search_by_user.all()
         return render(request, 'my_search.html', {'result': user_search_result})
 
 
