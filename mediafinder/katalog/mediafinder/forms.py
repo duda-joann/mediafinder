@@ -12,7 +12,6 @@ class FormSearch(forms.ModelForm):
 
     """Form to get from user  search word"""
 
-
     class Meta:
         model = Search
         fields = ('search_word', 'filter')
@@ -71,11 +70,4 @@ class RatingForm(forms.ModelForm):
                 Column('rate', css_class="form-group col-md-12"),
             ),
             Submit('submit', 'Submit',  css_default='btn_default'))
-
-
-class FavoritesForm(forms.ModelForm):
-
-    class Meta:
-        model = Favourites
-        fields = ('favourites',)
 

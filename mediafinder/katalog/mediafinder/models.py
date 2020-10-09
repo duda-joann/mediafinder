@@ -3,7 +3,6 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
 from django.core.validators import MaxValueValidator
-from django.db.models import signals
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from .manager import UserSearchManager
@@ -50,6 +49,8 @@ class Search(models.Model):
         return self.format()
 
     def save(self, *args, **kwargs):
+        slug_str = f' {str(self.search_word)} + {str(self.search_date)} +  '
+        self.slug = slug_str
         super(Search, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
@@ -105,13 +106,12 @@ class Rating(models.Model):
 
 class Favourites(models.Model):
     """ Model contains info about user and favorites moviews"""
+    transaction_id = models.AutoField(primary_key=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    favourites = models.CharField(max_length=200)
-
-    def format(self):
-        return f'{str(self.owner)}, {str(self.favourites)}'
+    video_url = models.ManyToManyField(Search)
+    creation_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return self.format()
+        return self.owner
 
 
