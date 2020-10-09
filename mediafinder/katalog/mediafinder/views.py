@@ -123,9 +123,22 @@ def create_rating(request: http.HttpRequest) -> http.HttpResponse:
 
 
 @login_required()
-def add_to_favourites(request: http.HttpRequest, video_id) -> http.HttpResponse:
+def add_to_favourites(request: http.HttpRequest, video_id :str) -> http.HttpResponse:
     video = get_object_or_404(Search, pk=video_id)
-
+    favourite, created = Favourites.objects.get_or_create(user=request.user, video_url = video.video_url)
+    user_favourites = Favourites.objects.filter(owner = request.user)
+    if user_favourites:
+        if user_favourites.filter(favourite.video_url == video.video_url):
+            messages.info(request, "You have got video in your favourites")
+            return redirect('mediafinder:mysearch')
+        else:
+            fav_attrs = {
+                'user': request.user,
+                'video_url': video.video_url
+            }
+            Favourites.objects.create(**fav_attrs)
+            messages.success(request, "You added video successfully to favourites")
+            return redirect('mediafinder:mysearch')
 
 
 
